@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: .
+    container_name: smart-journal-backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/smart-journal-db
+      - API_KEY=your_api_key_here
+    volumes:
+      - .:/app
+    command: npm run dev
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
